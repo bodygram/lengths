@@ -17,13 +17,13 @@ type Length uint64
 //
 // To count the number of units in a Length, divide it by the unit:
 //
-//	meter := units.Meter
-//	fmt.Print(uint64(meter/units.Millimeter)) // prints 1000
+//	meter := 10 * units.Meter
+//	fmt.Print(uint64(meter/units.Millimeter)) // prints 10000
 //
 // To convert an integer number of units to a Length, multiply it by the unit:
 //
 //	meters := 10
-//	fmt.Print(units.Length(meters)*units.Meter) // prints 10.000m
+//	fmt.Print(units.Length(meters)*units.Meter) // prints 10m
 //
 // To convert a floating point number of units to a Length, use the dedicated
 // FromXXX function where XXX is the unit.
