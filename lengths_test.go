@@ -17,102 +17,141 @@ func TestFromMetrics(t *testing.T) {
 		wantMM Length
 		wantCM Length
 		wantM  Length
+		wantKM Length
 	}{
 		{
 			f:      0,
 			wantMM: 0 * Nanometer,
 			wantCM: 0 * Nanometer,
 			wantM:  0 * Nanometer,
+			wantKM: 0 * Nanometer,
+		},
+		{
+			f:      1e-12,
+			wantMM: 0 * Nanometer,
+			wantCM: 0 * Nanometer,
+			wantM:  0 * Nanometer,
+			wantKM: 1 * Nanometer,
+		},
+		{
+			f:      1e-11,
+			wantMM: 0 * Nanometer,
+			wantCM: 0 * Nanometer,
+			wantM:  0 * Nanometer,
+			wantKM: 1e1 * Nanometer,
+		},
+		{
+			f:      1e-10,
+			wantMM: 0 * Nanometer,
+			wantCM: 0 * Nanometer,
+			wantM:  0 * Nanometer,
+			wantKM: 1e2 * Nanometer,
 		},
 		{
 			f:      1e-9,
 			wantMM: 0 * Nanometer,
 			wantCM: 0 * Nanometer,
 			wantM:  1 * Nanometer,
+			wantKM: 1e3 * Nanometer,
 		},
 		{
 			f:      1e-8,
 			wantMM: 0 * Nanometer,
 			wantCM: 0 * Nanometer,
 			wantM:  1e1 * Nanometer,
+			wantKM: 1e4 * Nanometer,
 		},
 		{
 			f:      1e-7,
 			wantMM: 0 * Nanometer,
 			wantCM: 1 * Nanometer,
 			wantM:  1e2 * Nanometer,
+			wantKM: 1e5 * Nanometer,
 		},
 		{
 			f:      1e-6,
 			wantMM: 1 * Nanometer,
 			wantCM: 1e1 * Nanometer,
 			wantM:  1e3 * Nanometer,
+			wantKM: 1e6 * Nanometer,
 		},
 		{
 			f:      1e-5,
 			wantMM: 1e1 * Nanometer,
 			wantCM: 1e2 * Nanometer,
 			wantM:  1e4 * Nanometer,
+			wantKM: 1e7 * Nanometer,
 		},
 		{
 			f:      1e-4,
 			wantMM: 1e2 * Nanometer,
 			wantCM: 1e3 * Nanometer,
 			wantM:  1e5 * Nanometer,
+			wantKM: 1e8 * Nanometer,
 		},
 		{
 			f:      1e-3,
 			wantMM: 1e3 * Nanometer,
 			wantCM: 1e4 * Nanometer,
 			wantM:  1e6 * Nanometer,
+			wantKM: 1e9 * Nanometer,
 		},
 		{
 			f:      1e-2,
 			wantMM: 1e4 * Nanometer,
 			wantCM: 1e5 * Nanometer,
 			wantM:  1e7 * Nanometer,
+			wantKM: 1e10 * Nanometer,
 		},
 		{
 			f:      1e-1,
 			wantMM: 1e5 * Nanometer,
 			wantCM: 1e6 * Nanometer,
 			wantM:  1e8 * Nanometer,
+			wantKM: 1e11 * Nanometer,
 		},
 		{
 			f:      1,
 			wantMM: 1e6 * Nanometer,
 			wantCM: 1e7 * Nanometer,
 			wantM:  1e9 * Nanometer,
+			wantKM: 1e12 * Nanometer,
 		},
 		{
 			f:      1e1,
 			wantMM: 1e7 * Nanometer,
 			wantCM: 1e8 * Nanometer,
 			wantM:  1e10 * Nanometer,
+			wantKM: 1e13 * Nanometer,
 		},
 		{
 			f:      1e2,
 			wantMM: 1e8 * Nanometer,
 			wantCM: 1e9 * Nanometer,
 			wantM:  1e11 * Nanometer,
+			wantKM: 1e14 * Nanometer,
 		},
 		{
 			f:      1e3,
 			wantMM: 1e9 * Nanometer,
 			wantCM: 1e10 * Nanometer,
 			wantM:  1e12 * Nanometer,
+			wantKM: 1e15 * Nanometer,
 		},
 	}
 
 	for _, tc := range testCases {
 		if got := Millimeters(tc.f); got != tc.wantMM {
-			t.Errorf("FromMillimeters(): got %q, want %q", got, tc.wantMM)
+			t.Errorf("Millimeters(): got %q, want %q", got, tc.wantMM)
 		}
 		if got := Centimeters(tc.f); got != tc.wantCM {
-			t.Errorf("FromCentimeters(): got %q, want %q", got, tc.wantCM)
+			t.Errorf("Centimeters(): got %q, want %q", got, tc.wantCM)
 		}
 		if got := Meters(tc.f); got != tc.wantM {
-			t.Errorf("FromMeters(): got %q, want %q", got, tc.wantM)
+			t.Errorf("Meters(): got %q, want %q", got, tc.wantM)
+		}
+		if got := Kilometers(tc.f); got != tc.wantKM {
+			t.Errorf("Kilometers(): got %q, want %q", got, tc.wantKM)
 		}
 	}
 }
@@ -170,7 +209,7 @@ func TestFromInches(t *testing.T) {
 
 	for _, tc := range testCases {
 		if got := Inches(tc.f); got != tc.want {
-			t.Errorf("FromInches(): got %q, want %q", got, tc.want)
+			t.Errorf("Inches(): got %q, want %q", got, tc.want)
 		}
 	}
 }
@@ -228,7 +267,7 @@ func TestFromFeet(t *testing.T) {
 
 	for _, tc := range testCases {
 		if got := Feet(tc.f); got != tc.want {
-			t.Errorf("FromFeet(): got %q, want %q", got, tc.want)
+			t.Errorf("Feet(): got %q, want %q", got, tc.want)
 		}
 	}
 }
@@ -278,7 +317,7 @@ func TestString(t *testing.T) {
 	}{
 		{
 			l:    0 * Nanometer,
-			want: "0nm",
+			want: "0",
 		},
 		{
 			l:    1 * Nanometer,
@@ -330,19 +369,31 @@ func TestString(t *testing.T) {
 		},
 		{
 			l:    7654321000000 * Nanometer,
-			want: "7654.321m",
+			want: "7.654321km",
 		},
 		{
 			l:    76543210000000 * Nanometer,
-			want: "76543.21m",
+			want: "76.54321km",
 		},
 		{
 			l:    765432100000000 * Nanometer,
-			want: "765432.1m",
+			want: "765.4321km",
 		},
 		{
 			l:    7654321000000000 * Nanometer,
-			want: "7654321m",
+			want: "7654.321km",
+		},
+		{
+			l:    76543210000000000 * Nanometer,
+			want: "76543.21km",
+		},
+		{
+			l:    765432100000000000 * Nanometer,
+			want: "765432.1km",
+		},
+		{
+			l:    7654321000000000000 * Nanometer,
+			want: "7654321km",
 		},
 	}
 
