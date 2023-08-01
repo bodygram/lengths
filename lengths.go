@@ -1,4 +1,5 @@
-// Package lengths provides a Length type and common length units.
+// Package lengths provides functionality for measuring and displaying lengths.
+
 package lengths
 
 import (
@@ -12,8 +13,7 @@ import (
 // more than 40 times the distance between Earth and the Moon).
 type Length uint64
 
-// Common length units. There is no definition for units larger than meter as
-// Bodygram doesn't have a need for it at the time this package was written.
+// Common length units.
 //
 // To count the number of units in a Length, divide it by the unit:
 //
@@ -33,6 +33,7 @@ const (
 	Millimeter        = 1e6 * Nanometer
 	Centimeter        = 1e7 * Nanometer
 	Meter             = 1e9 * Nanometer
+	Kilometer         = 1e12 * Nanometer
 	Inch              = 254e5 * Nanometer
 	Foot              = 3048e5 * Nanometer
 )
@@ -55,6 +56,11 @@ func (l Length) Centimeters() float64 {
 // Meters returns the length as a floating point number of meters.
 func (l Length) Meters() float64 {
 	return float64(l/Meter) + float64(l%Meter)/1e9
+}
+
+// Kilometers returns the length as a floating point number of kilometers.
+func (l Length) Kilometers() float64 {
+	return float64(l/Kilometer) + float64(l%Kilometer)/1e12
 }
 
 // Inches returns the length as a floating point number of inches.
@@ -90,6 +96,12 @@ func Meters(f float64) Length {
 	return Length(f * float64(Meter))
 }
 
+// Kilometers returns a length from a floating point number of kilometers. The
+// length's precision is floored to the closest nanometer.
+func Kilometers(f float64) Length {
+	return Length(f * float64(Kilometer))
+}
+
 // Inches returns a length from a floating point number of inches. The
 // length's precision is floored to the closest nanometer.
 func Inches(f float64) Length {
@@ -109,7 +121,7 @@ func formatFloat(f float64) string {
 func (l Length) String() string {
 	switch {
 	case l < Nanometer:
-		return "0nm"
+		return "0"
 	case l < Micrometer:
 		return fmt.Sprintf("%dnm", l/Nanometer)
 	case l < Millimeter:
@@ -118,7 +130,9 @@ func (l Length) String() string {
 		return fmt.Sprintf("%smm", formatFloat(l.Millimeters()))
 	case l < Meter:
 		return fmt.Sprintf("%scm", formatFloat(l.Centimeters()))
-	default:
+	case l < Kilometer:
 		return fmt.Sprintf("%sm", formatFloat(l.Meters()))
+	default:
+		return fmt.Sprintf("%skm", formatFloat(l.Kilometers()))
 	}
 }
